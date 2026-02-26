@@ -1,9 +1,12 @@
 import { useFormik } from "formik";
+import { useDispatch } from "react-redux";
 
 import * as Yup from "yup";
+import { addUser } from "../utils/userSlice";
 
 
 export default function Login() {
+  const dispatch=useDispatch();
   const schemaValidation=Yup.object({
     emailId:Yup.string().required("Email id is required").email("Please enter a valid email"),
     password:Yup.string()
@@ -32,6 +35,7 @@ export default function Login() {
             body:JSON.stringify(values)}
           );
          const data=await response.json();
+         dispatch(addUser(data));
          console.log(data);
 
          if(response.ok){
