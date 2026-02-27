@@ -3,10 +3,12 @@ import { useDispatch } from "react-redux";
 
 import * as Yup from "yup";
 import { addUser } from "../utils/userSlice";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Login() {
   const dispatch=useDispatch();
+  const navigate=useNavigate();
   const schemaValidation=Yup.object({
     emailId:Yup.string().required("Email id is required").email("Please enter a valid email"),
     password:Yup.string()
@@ -36,7 +38,7 @@ export default function Login() {
           );
          const data=await response.json();
          dispatch(addUser(data));
-         console.log(data);
+        navigate("/");
 
          if(response.ok){
           resetForm();
