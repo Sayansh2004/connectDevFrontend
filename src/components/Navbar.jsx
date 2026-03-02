@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { removeUser } from "../utils/userSlice";
 
 export default function Navbar() {
   const user = useSelector((store) => store.user);
   const navigate=useNavigate();
+  const dispatch=useDispatch();
 
   const handleLogout=async()=>{
        try{
@@ -18,6 +20,7 @@ export default function Navbar() {
         const data=await response.json();
 
         if(response.ok){
+          dispatch(removeUser());
            navigate("/login");
         }
       
@@ -48,7 +51,7 @@ export default function Navbar() {
               <div className="w-10 rounded-full">
                 <img
                   alt="User Avatar"
-                  src={user?.photoUrl}
+                  src={user?.photoUrl || "https://plus.unsplash.com/premium_vector-1683141132250-12daa3bd85cf?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"}
                 />
               </div>
             </div>
@@ -62,7 +65,7 @@ export default function Navbar() {
                   <span className="badge">New</span>
              
               </li>
-              <li><a>Settings</a></li>
+              <li><Link to="/connections">Connections</Link></li>
               <li onClick={handleLogout}><a>Logout</a></li>
             </ul>
           </div>

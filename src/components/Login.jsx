@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import * as Yup from "yup";
 import { addUser } from "../utils/userSlice";
 import { useNavigate } from "react-router-dom";
 
 
+
 export default function Login() {
+  const user=useSelector((store)=>store.user);
   const dispatch=useDispatch();
   const navigate=useNavigate();
   const schemaValidation=Yup.object({
@@ -37,6 +39,7 @@ export default function Login() {
             body:JSON.stringify(values)}
           );
          const data=await response.json();
+         
          dispatch(addUser(data));
         navigate("/");
 
@@ -58,7 +61,7 @@ export default function Login() {
   
   
 
-  return (
+  return (!user &&
     <form onSubmit={formik.handleSubmit}>
       <div className="card w-96 bg-base-200 shadow-xl">
         <div className="card-body">

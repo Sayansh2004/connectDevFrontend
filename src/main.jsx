@@ -7,23 +7,38 @@ import Login from './components/Login.jsx';
 import Profile from "./components/Profile.jsx";
 import { Provider } from 'react-redux';
 import appStore from './utils/app.store.js';
+import Connections from './components/Connections.jsx';
 
-const appRouter=createBrowserRouter([
+import ProtectedRoute from "./components/ProtectedRoute";
+
+const appRouter = createBrowserRouter([
   {
-    path:"/",
-    element:<App/>,
-    children:[
+    path: "/",
+    element: <App />,
+    children: [
       {
-        path:"/login",
-        element:<Login/>
+        path: "/login",
+        element: <Login />  
       },
       {
-        path:"/profile",
-        element:<Profile/>
+        path: "/profile",
+        element: (
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path: "/connections",
+        element: (
+          <ProtectedRoute>
+            <Connections />
+          </ProtectedRoute>
+        )
       }
     ]
   }
-])
+]);
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
