@@ -1,11 +1,12 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/connectionSlice";
+import UserCard from "./UserCard";
 
 export default function Connections() {
 
   const connections = useSelector((store) => store.connections);
-  console.log(connections);
+
   const dispatch = useDispatch();
 
   const fetchConnections = async () => {
@@ -24,7 +25,11 @@ export default function Connections() {
 
       const data = await response.json();
 
-      dispatch(addConnections(data.trueConnections));
+const cleanedConnections = data.trueConnections.map(conn => 
+  conn.fromUserId
+);
+
+dispatch(addConnections(cleanedConnections));;
 
     } catch (err) {
       console.error(err.message);
@@ -46,22 +51,10 @@ export default function Connections() {
   }
 
   return (
-    <div className="flex flex-col items-center my-10 gap-4">
-      <h1 className="font-bold text-xl">Connections</h1>
-
-      {connections.map((connection) => (
-        <div
-          key={connection._id}
-          className="card w-96 bg-base-100 shadow-md p-4"
-        >
-          <h2 className="font-semibold text-lg">
-            {connection.firstName} {connection.lastName}
-          </h2>
-          <p className="text-sm opacity-70">
-            {connection.emailId}
-          </p>
-        </div>
-      ))}
-    </div>
+  <div className="flex flex-col items-center gap-6 my-10">
+  {connections.map((connection) => (
+    <UserCard key={connection._id} user={connection} />
+  ))}
+</div>
   );
 }

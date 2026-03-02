@@ -10,6 +10,7 @@ import appStore from './utils/app.store.js';
 import Connections from './components/Connections.jsx';
 
 import ProtectedRoute from "./components/ProtectedRoute";
+import Requests from './components/Requests.jsx';
 
 const appRouter = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const appRouter = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <Connections />
+          </ProtectedRoute>
+        )
+      },
+      {
+        path:"/requests",
+        element:(
+          <ProtectedRoute>
+            <Requests/>
           </ProtectedRoute>
         )
       }
