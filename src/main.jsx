@@ -9,42 +9,25 @@ import { Provider } from 'react-redux';
 import appStore from './utils/app.store.js';
 import Connections from './components/Connections.jsx';
 
-import ProtectedRoute from "./components/ProtectedRoute";
+// import ProtectedRoute from "./components/ProtectedRoute";
+import Feed from './components/Feed.jsx';
 import Requests from './components/Requests.jsx';
+import Chat from './components/Chat.jsx';
 
 const appRouter = createBrowserRouter([
   {
+    path: "/login",
+    element: <Login />
+  },
+  {
     path: "/",
-    element: <App />,
+    element: <App />,   
     children: [
-      {
-        path: "/login",
-        element: <Login />  
-      },
-      {
-        path: "/profile",
-        element: (
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path: "/connections",
-        element: (
-          <ProtectedRoute>
-            <Connections />
-          </ProtectedRoute>
-        )
-      },
-      {
-        path:"/requests",
-        element:(
-          <ProtectedRoute>
-            <Requests/>
-          </ProtectedRoute>
-        )
-      }
+      { index: true, element: <Feed /> },   
+      { path: "profile", element: <Profile /> },
+      { path: "connections", element: <Connections /> },
+      { path: "requests", element: <Requests /> },
+      { path: "chat/:targetUserId", element: <Chat /> }
     ]
   }
 ]);

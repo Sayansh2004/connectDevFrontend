@@ -14,7 +14,7 @@ export default function UserCard({ user }) {
   } = user;
 
   return (
-    <div className="card bg-base-100 w-96 shadow-sm">
+    <div className="card bg-base-100 shadow-md w-full">
       <figure>
         <img
           src={photoUrl || "https://via.placeholder.com/400x300"}
